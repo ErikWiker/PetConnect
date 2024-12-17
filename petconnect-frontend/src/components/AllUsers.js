@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProfiles } from '../services/apiService';
+import '../styles/AllUsers.css'; // Optional: Custom styles
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -22,14 +23,15 @@ const AllUsers = () => {
   const handleViewProfile = (id) => { navigate(`/user/${id}`); };
 
   return (
-    <div>
-      <h1>All Users</h1>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <table>
+    <div className="container mt-5">
+      <h1 className="text-center">Connections</h1>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Username</th>
             <th>Location</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +39,11 @@ const AllUsers = () => {
             <tr key={user.id}>
               <td>{user.username}</td>
               <td>{user.location || 'N/A'}</td>
-              <td><button onClick={() => handleViewProfile(user.id)}>View Profile</button></td>
+              <td>
+                <button className="btn btn-primary btn-sm" onClick={() => handleViewProfile(user.id)}>
+                  View Profile
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
