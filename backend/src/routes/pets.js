@@ -81,6 +81,27 @@ router.put('/pets/:id', async (req, res) => {
   }
 });
 
+// Delete a pet
+router.delete('/pets/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const query = 'DELETE FROM pets WHERE id = $1 AND user_id = $2 RETURNING id';
+    const result = await db.query(query, [id, userId]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Pet not found or unauthorized" });
+    }
+
+    res.status(204).send(); // No content response
+  } catch (err) {
+    console.error('Error deleting pet:', err);
+    res.status(500).json({ error: "Error deleting pet" });
+  }
+});
+
+
 // Get pets by user ID
 router.get("/pets/:userId", authenticateToken, async (req, res) => {
   const { userId } = req.params;

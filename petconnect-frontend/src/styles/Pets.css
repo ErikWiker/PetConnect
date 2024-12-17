@@ -22,4 +22,20 @@
   .list-group-item .btn {
     margin-left: 10px;
   }
+
+  th.actions-header { 
+    text-align: center; /* Center align the column header */
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center; /* Center align the buttons */
+    gap: 10px; /* Adjust the gap as needed */
+  }
+  
+  .actions button {
+    flex: 1;
+  }
+  
+  
   

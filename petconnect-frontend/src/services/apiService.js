@@ -155,6 +155,28 @@ export const updatePet = async (id, petData) => {
   } 
 };
 
+// Delete a pet
+export const deletePet = async (id) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error("Authentication token is missing");
+  }
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    await axios.delete(`${API_URL}/user/pets/${id}`, config);
+  } catch (err) {
+    console.error('Error deleting pet:', err);
+    throw err;
+  }
+};
+
+
 // Get user profile by ID
 export const getUserProfile = async (userId) => {
   const token = localStorage.getItem('token');
