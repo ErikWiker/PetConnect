@@ -1,0 +1,24 @@
+.container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .profile-form {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .profile-view p {
+    font-size: 1.1em;
+    margin: 10px 0;
+  }
+  
+  .profile-view .btn {
+    margin-right: 10px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  

@@ -27,10 +27,14 @@ function App() {
       <div className="App">
         <NavBar />
         <Routes>
-          {/* Check if user is logged in, if not, redirect to login */} 
+          {/* Default Route: Check if user is logged in, if not, redirect to login */} 
           <Route path="/" element={<Navigate to={isLoggedIn() ? '/profile' : '/login'} />} />
+          
+          {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Private Routes */}
           <Route path="/profile" element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
           <Route path="/all-users" element={ <PrivateRoute> <AllUsers /> </PrivateRoute> } /> 
           <Route path="/pets" element={ <PrivateRoute> <Pets /> </PrivateRoute> } /> 

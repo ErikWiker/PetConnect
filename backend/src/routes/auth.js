@@ -1,4 +1,5 @@
 // Handles Authentication routes (login/register)
+
 const express = require("express");  // Importing Express to handle HTTP requests
 const { registerUser, loginUser } = require("../controllers/authController");  // Importing the controller functions for register and login
 

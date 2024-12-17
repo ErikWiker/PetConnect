@@ -134,6 +134,27 @@ export const addPet = async (petData) => {
   } 
 };
 
+// Update an existing pet for the user 
+export const updatePet = async (id, petData) => { 
+  const token = localStorage.getItem('token'); 
+  if (!token) { 
+    throw new Error("Authentication token is missing"); 
+  } 
+  const config = { 
+    headers: { 
+      Authorization: `Bearer ${token}`, 
+    }, 
+  }; 
+  
+  try { 
+    const response = await axios.put(`${API_URL}/user/pets/${id}`, petData, config); 
+    return response.data; 
+  } catch (err) { 
+    console.error('Error updating pet:', err); 
+    throw err; 
+  } 
+};
+
 // Get user profile by ID
 export const getUserProfile = async (userId) => {
   const token = localStorage.getItem('token');

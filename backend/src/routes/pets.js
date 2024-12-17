@@ -1,9 +1,19 @@
+// Handle pet related actions
+
 const express = require("express");
 const db = require("../db/db");
 const router = express.Router();
+//const { updatePet } = require('../controllers/petController'); //TODO: add getPets, addPet once refactored
 
 // Middleware to verify JWT token
 const authenticateToken = require("../middleware/authenticateToken");
+router.use(authenticateToken);
+
+//TODO: add these once refactored
+// router.get('/user/pets', getPets); 
+// router.post('/user/pets', addPet);
+//Update Users Pet
+//router.put('/user/pets/:id', updatePet);
 
 // Get user pets
 router.get("/pets", authenticateToken, async (req, res) => {
@@ -41,6 +51,35 @@ router.post("/pets", authenticateToken, async (req, res) => {
   }
 });
 
+// Update a pet
+router.put('/pets/:id', async (req, res) => {
+  const { id } = req.params;
+  const { petName, type, species, age } = req.body;
+
+  if (!['dog', 'cat', 'reptile', 'amphibian', 'fish', 'small mammal', 'bird', 'insect', 'other'].includes(type)) {
+    return res.status(400).json({ error: "Invalid type" });
+  }
+
+  try {
+    const query = `
+      UPDATE pets
+      SET pet_name = $1, type = $2, species = $3, age = $4
+      WHERE id = $5 AND user_id = $6
+      RETURNING id, pet_name, type, species, age;
+    `;
+    const userId = req.user.id;
+    const result = await db.query(query, [petName, type, species, age, id, userId]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Pet not found or unauthorized" });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error updating pet:', err);
+    res.status(500).json({ error: "Error updating pet" });
+  }
+});
 
 // Get pets by user ID
 router.get("/pets/:userId", authenticateToken, async (req, res) => {
@@ -60,5 +99,3 @@ router.get("/pets/:userId", authenticateToken, async (req, res) => {
 
 module.exports = router;
 
-
-module.exports = router;

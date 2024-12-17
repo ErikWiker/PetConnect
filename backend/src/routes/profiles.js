@@ -1,9 +1,12 @@
-// handle user profile-related actions
+// Handle user profile-related actions
 
 const express = require("express");
 const db = require("../db/db");
 const router = express.Router();
+
+// Middleware
 const authenticateToken = require("../middleware/authenticateToken");
+router.use(authenticateToken);
 
 // View Profile (GET)
 router.get("/user/profile", authenticateToken, async (req, res) => {

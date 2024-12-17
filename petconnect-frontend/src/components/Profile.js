@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getProfile, updateUserProfile } from "../services/apiService"; // Import the service functions for API calls
 import { useNavigate } from 'react-router-dom'; // Import to navigate to other pages
+import { removeToken } from '../utils/tokenValidation'
+import '../styles/Profile.css'; // TODO: Optional: Custom styles
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -49,61 +51,61 @@ const Profile = () => {
 
   // **Logout function** 
   const handleLogout = () => { 
-    localStorage.removeItem('token'); // Remove token from localStorage 
+    removeToken(); // Remove token from localStorage 
     navigate('/login'); // Redirect to login page
   };
 
-  if (error) return <div>{error}</div>;
+  if (error) return <div className="alert alert-danger">{error}</div>;
 
   return (
-    <div>
-      <h1>User Profile</h1>
+    <div className="container mt-5">
+      <h1 className="text-center">User Profile</h1>
       {isEditing ? (
-        <form onSubmit={handleSubmit}>
-          <div>
+        <form onSubmit={handleSubmit} className="profile-form">
+          <div className="form-group">
             <label>Username</label>
             <input
               type="text"
+              className="form-control"
               name="username"
               value={profile.username}
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="form-group">
             <label>Email</label>
             <input
               type="email"
+              className="form-control"
               name="email"
               value={profile.email}
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="form-group">
             <label>Location</label>
             <input
               type="text"
+              className="form-control"
               name="location"
               value={profile.location}
               onChange={handleChange}
             />
           </div>
-          <button type="submit">Save</button>
-          <button type="button" onClick={() => setIsEditing(false)}>
-            Cancel
-          </button>
+          <button type="submit" className="btn btn-primary">Save</button>
+          <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
       ) : (
-        <div>
-          <p>Username: {profile.username}</p>
-          <p>Email: {profile.email}</p>
-          <p>Location: {profile.location}</p>
-          <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-          <button onClick={() => navigate('/pets')}>View My Pets</button> 
-          <button onClick={handleLogout}>Logout</button>
-          <button onClick={() => navigate('/all-users')}>View All Users</button>
+        <div className="profile-view">
+          <p><strong>Username:</strong> {profile.username}</p>
+          <p><strong>Email:</strong> {profile.email}</p>
+          <p><strong>Location:</strong> {profile.location}</p>
+          <button className="btn btn-primary" onClick={() => setIsEditing(true)}>Edit Profile</button>
+          <button className="btn btn-info" onClick={() => navigate('/pets')}>View My Pets</button>
+          <button className="btn btn-secondary" onClick={() => navigate('/all-users')}>View All Users</button>
+          <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
         </div>
       )}
-      
     </div>
   );
 };
