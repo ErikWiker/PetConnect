@@ -1,7 +1,7 @@
 # PetConnect
 A website to connect with other pet owners
 
-#### Video Demo: [URL HERE]
+#### Video Demo: [\[Video\]](https://youtu.be/_EtiX1TD85w)
 #### Description:
 
 PetConnect is a web application designed to help pet owners connect with each other and manage information about their pets. This project aims to create a user-friendly platform where users can register, manage their pets, view profiles of other users, and explore connections within the pet community. The idea is to allow people to find friends for their pets, friends for themselves, or even help with watching each others pets when owners go out of town. The application is developed using modern web technologies, ensuring a seamless and interactive user experience.
